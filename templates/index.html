@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Введите sql-запрос</title>
+	<style>
+	body {
+		background-color: #f2f2f2;
+		font-family: Arial, sans-serif;
+		margin: 0;
+		padding: 0;
+	}
+
+	h1 {
+		background-color: #0077be;
+		color: #fff;
+		padding: 20px;
+		text-align: center;
+		margin-top: 0;
+	}
+
+	form {
+		margin: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	input[type="text"] {
+		width: 50%;
+		padding: 10px;
+		border-radius: 5px;
+		border: none;
+		margin-bottom: 20px;
+		background-color: #bfeaff;
+	}
+
+	button[type="submit"] {
+		background-color: #0077be;
+		color: #fff;
+		padding: 10px 20px;
+		border-radius: 5px;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s ease-in-out;
+	}
+
+	button[type="submit"]:hover {
+		background-color: #009de0;
+	}
+	</style>
+</head>
+<body>
+	<h1>Введите sql-запрос</h1>
+	<form action="/submit" method="POST">
+		<input type="text" id="request" name="request">
+		<button type="submit">Отправить запрос</button>
+	</form>
+</body>
+</html>

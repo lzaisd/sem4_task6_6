@@ -1,0 +1,3 @@
+SELECT * FROM db;
+SELECT * FROM db WHERE pet = 'dog';
+SELECT * FROM db WHERE name LIKE '%a%';
