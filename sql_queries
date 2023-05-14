@@ -1,3 +1,7 @@
 SELECT * FROM db;
 SELECT * FROM db WHERE pet = 'dog';
 SELECT * FROM db WHERE name LIKE '%a%';
+UPDATE db SET pet='fish' WHERE id=2;
+DELETE FROM db WHERE id = 3
+INSERT INTO db (name, pet) VALUES ('John', 'hamster')
+SELECT name, pet FROM db ORDER BY name ASC

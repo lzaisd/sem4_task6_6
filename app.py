@@ -17,12 +17,18 @@ def submit():
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute(request_text)
-        results = cur.fetchall()
-        conn.close()
-
-        return render_template('results.html', results=results)
-    except sqlite3.OperationalError:
-        return 'Некорректный запрос'
+        if request_text.strip().lower().startswith('select'):
+            results = cur.fetchall()
+            return render_template('results.html', results=results)
+        else:
+            conn.commit()
+            cur.execute('SELECT * FROM db')
+            results = cur.fetchall()
+            return render_template('results.html', results=results)
+    except sqlite3.OperationalError as e:
+        return 'Ошибка в запросе: {}'.format(str(e))
+    except Exception as e:
+        return 'Ошибка сервера: {}'.format(str(e))
 
 
 def get_db_connection():

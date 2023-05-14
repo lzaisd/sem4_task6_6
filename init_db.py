@@ -20,5 +20,9 @@ cur.execute("INSERT INTO db (name, pet) VALUES (?, ?)",
             ('Bob', 'dog')
             )
 
+cur.execute("INSERT INTO db (name, pet) VALUES (?, ?)",
+            ('Vasya', 'pig')
+            )
+
 connection.commit()
 connection.close()
