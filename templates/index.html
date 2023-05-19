@@ -51,9 +51,32 @@
 </head>
 <body>
 	<h1>Введите sql-запрос</h1>
-	<form action="/submit" method="POST">
+	<form action="" method="POST">
 		<input type="text" id="request" name="request">
 		<button type="submit">Отправить запрос</button>
 	</form>
+	{% if error_message %}
+		<p>{{ error_message }}</p>
+	{% endif %}
+	{% if results %}
+		<table>
+			<thead>
+				<tr>
+					{% for column in results[0].keys() %}
+						<th>{{ column }}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for row in results %}
+					<tr>
+						{% for value in row %}
+							<td>{{ value }}</td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
 </body>
 </html>

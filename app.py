@@ -4,31 +4,31 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        request_text = request.form['request']
 
+        try:
+            query = request_text.split(';')[0]  # Extract main query before ;
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    request_text = request.form['request']
+            conn = get_db_connection()
+            cur = conn.cursor()
+            cur.execute(query)
 
-    try:
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute(request_text)
-        if request_text.strip().lower().startswith('select'):
-            results = cur.fetchall()
-            return render_template('results.html', results=results)
-        else:
+            if query.strip().lower().startswith('select'):
+                results = cur.fetchall()
+                return render_template('index.html', results=results, error_message=None, request=request_text)
+
             conn.commit()
             cur.execute('SELECT * FROM db')
             results = cur.fetchall()
-            return render_template('results.html', results=results)
-    except sqlite3.OperationalError as e:
-        return 'Ошибка в запросе: {}'.format(str(e))
-    except Exception as e:
-        return 'Ошибка сервера: {}'.format(str(e))
+            return render_template('index.html', results=results, error_message=None, request=request_text)
+
+        except sqlite3.Error as e:
+            return render_template('index.html', results=None, error_message=str(e), request=request_text)
+
+    return render_template('index.html', results=None, error_message=None, request='')
 
 
 def get_db_connection():
